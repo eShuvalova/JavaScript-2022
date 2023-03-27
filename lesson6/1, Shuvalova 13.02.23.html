@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Homework</title>
+  <style>
+    .product {
+      width: 200px;
+      padding: 10px;
+      float: left;
+      margin-right: 30px;
+      box-shadow: 0 0 4px black;
+    }
+  </style>
+</head>
+<body>
+<!--
+Обязательное задание.
+
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
+-->
+<div class="product">
+  <div class="productName">Товар 1</div>
+  <img src="https://loremflickr.com/200/300/goods?lock=2" alt="">
+  <button>В корзину</button>
+</div>
+<div class="product">
+  <div class="productName">Товар 2</div>
+  <img src="https://loremflickr.com/200/300/goods?lock=12" alt="">
+  <button>В корзину</button>
+</div>
+<div class="product">
+  <div class="productName">Товар 3</div>
+  <img src="https://loremflickr.com/200/300/goods?lock=33" alt="">
+  <button>В корзину</button>
+</div>
+
+<script>
+  "use strict";
+
+  /*
+  1. Установите всем элементам с классом "productName" размер шрифта 24px.
+   */
+    const productNameEls = document.querySelectorAll('.productName');
+    for(const elem of productNameEls) {
+      console.log(elem);
+      elem.style.fontSize = '24px';
+    }
+    
+  /*
+  2. Установите всем элементам с классом "product" внешний отступ справа 50px.
+   */
+  const products = document.querySelectorAll('.product');
+  console.log(products);
+  for(const elem of products) {
+    console.log(elem);
+    elem.style.marginRight = '50px';
+  }
+
+  /*
+  3. При клике на кнопку "В корзину" название кнопки должно поменяться на
+  "Добавлено" и кнопка должна стать неактивной.
+   */
+  const btnEls = document.querySelectorAll('button'); // нашла каждую кнопку
+  console.log(btnEls); // вывела каждую кнопку для проверки
+  
+  btnEls.forEach(el => { // каждому элементу массива (кнопке)  
+    el.addEventListener('click', () => {  // при клике
+      console.log(el.textContent);
+      el.textContent = 'Добавлено'; // добавлена смена текста внутри кнопки
+      el.setAttribute('disabled', true); // смена кнопки на неактивную
+    });
+  })
+
+  /*
+  4. Создайте полную (глубокую) копию элемента с классом product, измените в
+  этой копии путь до картинки на:
+  https://loremflickr.com/200/300/goods?lock=37
+  Поставьте название товара в данной копии "Товар 4" и замените последний
+  отображенный товар на странице на созданную копию. У данной копии также
+  должен правильно работать код из 3-го задания.
+   */
+  /*
+  списала! не знаю методов cloneNode, last-of-type и replaceWith.
+  + не работает задание 3 (не добавляется товар)
+  */
+  const productCopy = document.querySelector('.product').cloneNode(true);
+  console.log(productCopy);
+  productCopy.querySelector('img').src = 'https://loremflickr.com/200/300/goods?lock=37';
+  productCopy.querySelector('.productName').textContent = 'Товар 4';
+  document.querySelector('.product:last-of-type').replaceWith(productCopy);
+  /*
+  5. По истечении 2 секунд с момента открытия страницы первый товар должен быть
+  удален из html.
+   */
+  /*
+  решение подсмотрела. Сама полезла искать первый элемент массива через forEach,
+  for of, но не получалось, т.к. перебираемый объект не массив, а массивоподобныйю
+  не знала о методе remove().
+  */
+  document.addEventListener("DOMContentLoaded", () => { //после загрузки страницы
+    window.setTimeout(productHide, 2000);  // через 2 сек запускается ф-я 
+
+    const product = document.querySelector('.product'); // поиск первого эл-та массива
+    console.log(product);
+    function productHide () {
+      product.remove(); // удаление элемента
+    }
+    console.log(product);
+  });
+  
+  /*
+  списанный вариант:
+  setTimeout(() => document.querySelector('.product').remove(), 2000);
+  */
+</script>
+</body>
+</html>
